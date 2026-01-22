@@ -55,6 +55,7 @@ export default function GameIframe({ onClose }: GameIframeProps) {
           overflow: 'hidden',
         }}
       >
+        {/* Iframe to load the Tic Tac Toe game */}
         <iframe
           src="/game/"
           style={{

@@ -4,8 +4,18 @@ import ThemeRegistry from './components/ThemeRegistry';
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "X-TTT :: Tic-Tac-Toe",
-  description: "Classic multiplayer Tic-Tac-Toe game",
+  title: "X-TTT-CPA :: Tic-Tac-Toe-Two",
+  description: "Classic multiplayer games",
+  manifest: "/manifest.json",
+  // icons: {
+  //   icon: [
+  //     { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+  //     { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+  //   ],
+  //   apple: [
+  //     { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+  //   ],
+  // },
 };
 
 export default function RootLayout({
