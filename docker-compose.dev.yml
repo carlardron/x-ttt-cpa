@@ -1,5 +1,22 @@
 version: '3.8'
 services:
+
+  nextjs-wrapper:
+    build:
+      context: ./nextjs-wrapper
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./nextjs-wrapper:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+    depends_on:
+      - nginx-backend
+    networks:
+      - frontend
+
   react-app-dev:
     build:
       context: ./react_ws_src
@@ -7,13 +24,15 @@ services:
     volumes:
       - ./react_ws_src:/app
       - react_app_node_modules:/app/node_modules
-    ports:
-      - "3000:3000"
     environment:
       - NODE_ENV=development
-      - PORT=3000 # Added PORT for consistency
+      - PORT=3000
+    expose:
+      - "3000"
     depends_on:
       - ws
+    networks:
+      - backend
 
   ws:
     build:
@@ -22,22 +41,42 @@ services:
     volumes:
       - ./WS:/app
       - ws_node_modules:/app/node_modules
-    ports:
-      - "3001:3001"
+    expose:
+      - "3001"
     environment:
       - NODE_ENV=development
       - PORT=3001
+    networks:
+      - backend
 
-      
-  nginx:
+  nginx-backend:
     image: nginx:alpine
-    ports:
-      - "8080:80"
+    expose:
+      - "80"
     volumes:
       - ./nginx/nginx.dev.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - react-app-dev
       - ws
+    networks:
+      - backend
+      - frontend
+      
+  nginx-frontend:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.frontend.dev.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - nextjs-wrapper
+      - nginx-backend
+    networks:
+      - frontend
+
+networks:
+  frontend:
+  backend:
 
 volumes:
   react_app_node_modules:
