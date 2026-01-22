@@ -1,0 +1,15 @@
+{
+  "name": "x-ttt-cpa-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "docker-compose up react-app-dev ws",
+    "prod": "docker-compose up react-app-prod ws",
+    "build": "docker-compose build",
+    "down": "docker-compose down",
+    "debug:build:react-app-dev": "docker build -f react_ws_src/Dockerfile.dev -t x-ttt-cpa-react-app-dev ./react_ws_src",
+    "debug:build:ws": "docker build -f WS/Dockerfile -t x-ttt-cpa-ws ./WS",
+    "debug:run_asleep:react-app-dev": "docker run -d --name x-ttt-cpa-react-app-dev-debug x-ttt-cpa-react-app-dev sleep infinity",
+    "debug:run_asleep:ws": "docker run -d --name x-ttt-cpa-ws-debug x-ttt-cpa-ws sleep infinity"
+  }
+}

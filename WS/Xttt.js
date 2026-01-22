@@ -23,6 +23,13 @@ server.listen(port, function () {
 // Routing
 app.use(express.static(__dirname + '/public'));
 
+
+// Add this after static middleware
+app.use(function (err, req, res, next) {
+  console.error('Express error:', err);
+  res.status(500).send('Internal Server Error');
+});
+
 require('./XtttGame.js');
 
 io.on('connection', set_game_sock_handlers);

@@ -1,0 +1,15 @@
+# Dockerfile for react_ws_src (production)
+FROM node:14 AS build
+WORKDIR /app
+COPY package.json ./
+RUN npm install || true
+COPY . .
+RUN npm run build || npm run build:prod || true
+
+# Serve static files with a minimal Node.js server
+FROM node:14 AS prod
+WORKDIR /app
+COPY --from=build /app /app
+RUN npm install -g serve || true
+EXPOSE 5000
+CMD ["serve", "-s", "build", "-l", "5000"]

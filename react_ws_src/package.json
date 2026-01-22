@@ -9,6 +9,7 @@
     "type": "git",
     "url": "https://github.com/xims/X-TTT/react_ws_src"
   },
+  "proxy": "http://localhost:8080",
   "scripts": {
     "start": "node devServer.js",
     "lint": "eslint src",

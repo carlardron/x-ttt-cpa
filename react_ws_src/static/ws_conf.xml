@@ -26,7 +26,8 @@
 		<SCRIPT__contact_form		u='e/s'	/>
 
 
-		<SOCKET__io		_u='http://z2:3001'	/>
+		<!-- <SOCKET__io		_u='http://z2:3001'	/> -->
+		<SOCKET__io		_u='http://localhost:8080'	/>
 	</loc>
 
 <!--	========================	========================	========================	-->

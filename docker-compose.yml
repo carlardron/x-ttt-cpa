@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  react-app-dev:
+    build:
+      context: ./react_ws_src
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./react_ws_src:/app
+      - react_app_node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - ws
+
+  react-app-prod:
+    build:
+      context: ./react_ws_src
+      dockerfile: Dockerfile.prod
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - ws
+    deploy:
+      replicas: 1
+
+  ws:
+    build:
+      context: ./WS
+      dockerfile: Dockerfile
+    volumes:
+      - ./WS:/app
+      - ws_node_modules:/app/node_modules
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
+
+volumes:
+  react_app_node_modules:
+  ws_node_modules:
