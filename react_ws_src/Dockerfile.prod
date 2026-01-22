@@ -11,5 +11,5 @@ FROM node:14 AS prod
 WORKDIR /app
 COPY --from=build /app /app
 RUN npm install -g serve || true
-EXPOSE 5000
-CMD ["serve", "-s", "build", "-l", "5000"]
+EXPOSE 3000
+CMD ["serve", "-s", "build", "-l", "3000"]

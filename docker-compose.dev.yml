@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  react-app-dev:
+    build:
+      context: ./react_ws_src
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./react_ws_src:/app
+      - react_app_node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000 # Added PORT for consistency
+    depends_on:
+      - ws
+
+  ws:
+    build:
+      context: ./WS
+      dockerfile: Dockerfile
+    volumes:
+      - ./WS:/app
+      - ws_node_modules:/app/node_modules
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+
+      
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.dev.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - react-app-dev
+      - ws
+
+volumes:
+  react_app_node_modules:
+  ws_node_modules:
